@@ -1,24 +1,19 @@
 package net.systemeD.halcyon {
 
 	import flash.display.*;
-	import flash.geom.Matrix;
-	import flash.geom.Point;
-	import flash.geom.Rectangle;
-	import flash.text.AntiAliasType;
-	import flash.text.GridFitType;
-	import flash.text.TextField;
-	import flash.text.TextFormat;
 	import flash.events.*;
+	import flash.geom.Point;
+	
+	import net.systemeD.halcyon.connection.*;
 	import net.systemeD.halcyon.styleparser.*;
-    import net.systemeD.halcyon.connection.*;
 
 	/** The elastic is a visual indication of a way that the user is currently in the process of drawing. */
 	public class Elastic {
 
 		public var map:Map;							// reference to parent map
 		public var sprites:Array=new Array();		// instances in display list
-        private var _start:Point;
-        private var _end:Point;
+        private var _start:Point;                   // fixed end, in projected map coords
+        private var _end:Point;                     // floating end, in projected map coords
 
 		/** Create and draw the elastic. */
 		public function Elastic(map:Map, start:Point, end:Point) {
@@ -44,6 +39,11 @@ package net.systemeD.halcyon {
 		
 		public function get end():Point {
 		    return _end;
+		}
+		
+		/** Get the length of the elastic, in map units */
+		public function get length():Number {
+			return Math.sqrt((_start.x - _end.x) * (_start.x - _end.x) + (_start.y - _end.y) * (_start.y - _end.y));
 		}
 		
 		/** Remove all currently existing sprites */
