@@ -187,6 +187,7 @@ package net.systemeD.controls {
 						selectedIndex=-1;		// nothing selected
 					} else {
 						// show dropdown
+						trace("commitProperties: show drop down");
 						showDropdown = true;
 						selectedIndex = 0;		// first item selected
 					}
@@ -203,23 +204,23 @@ package net.systemeD.controls {
 			
 			if(selectedIndex == -1 && typedTextChanged && textInput.text!=typedText) { 
 				// not in menu
-				// trace("not in menu"); trace("- restoring to "+typedText);
+				 trace("not in menu"); trace("- restoring to "+typedText);
 				textInput.text = typedText;
 				textInput.setSelection(cursorPosition, cursorPosition);
 			} else if (dropdown && typedTextChanged && textInput.text!=typedText) {
 				// in menu, but user has typed
-				// trace("in menu, but user has typed"); trace("- restoring to "+typedText);
+				 trace("in menu, but user has typed"); trace("- restoring to "+typedText);
 				textInput.text = typedText;
 				textInput.setSelection(cursorPosition, cursorPosition);
 			} else if (showingDropdown && textInput.text==selectedLabel) {
 				// force update if Flex has fucked up again
-				// trace("should force update");
+				 trace("should force update");
 				textInput.htmlText=selectedLabel;
 				textInput.validateNow();
 				if (typedTextChanged) textInput.setSelection(cursorPosition, cursorPosition);
 			} else if (showingDropdown && textInput.text!=selectedLabel && !typedTextChanged) {
 				// in menu, user has navigated with cursor keys/mouse
-				// trace("in menu, user has navigated with cursor keys/mouse");
+				 trace("in menu, user has navigated with cursor keys/mouse");
 				textInput.text = selectedLabel;
 				textInput.setSelection(0, textInput.text.length);
 			} else if (textInput.text!="") {
@@ -228,6 +229,7 @@ package net.systemeD.controls {
 
 			if (showDropdown && !dropdown.visible) {
 				// controls the open duration of the dropdown
+				trace("must now show dropdown");
 				super.open();
 				showDropdown = false;
 				showingDropdown = true;
@@ -236,6 +238,11 @@ package net.systemeD.controls {
 		}
 	
 		override protected function keyDownHandler(event:KeyboardEvent):void {
+			trace("keyDownHandler."+event.keyCode);
+			if (event.keyCode == 27) {
+				trace("escape!");
+				typedTextChanged=false;
+			}
 			super.keyDownHandler(event);
 
 			if (event.keyCode==Keyboard.UP || event.keyCode==Keyboard.DOWN) {
@@ -247,7 +254,16 @@ package net.systemeD.controls {
 				textInput.text = typedText;
 				textInput.setSelection(textInput.text.length, textInput.text.length);
 				showingDropdown = false;
+				showDropdown = false; 
 				dropdownClosed=true;
+				
+                        dropdownClosed=true;
+                        showDropdown=false;
+                        showingDropdown=false;
+                        selectedIndex=-1;       // nothing selected
+				trace("keyDownHandler: escape");
+				typedTextChanged=false;
+                event.stopImmediatePropagation();
 
 			} else if (event.keyCode == Keyboard.ENTER) {
 				// ENTER pressed, so select the topmost item (if it exists)
