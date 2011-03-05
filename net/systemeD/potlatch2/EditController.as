@@ -1,17 +1,17 @@
 package net.systemeD.potlatch2 {
+    import flash.events.*;
+    import flash.external.ExternalInterface;
+    import flash.geom.*;
+    import flash.text.TextField;
+    
+    import mx.managers.CursorManager;
+    
     import net.systemeD.halcyon.Map;
     import net.systemeD.halcyon.MapController;
     import net.systemeD.halcyon.MapEvent;
-    import net.systemeD.halcyon.connection.*;
     import net.systemeD.halcyon.VectorLayer;
+    import net.systemeD.halcyon.connection.*;
     import net.systemeD.potlatch2.controller.*;
-    import net.systemeD.potlatch2.FunctionKeyManager;
-	import mx.managers.CursorManager;
-    import flash.external.ExternalInterface;
-    import flash.events.*;
-	import flash.geom.*;
-	import flash.ui.Keyboard;
-	import flash.text.TextField;
 
     /** Controller for the main map editing window itself. The logic that responds to mouse and keyboard events is all 
     * buried in various ControllerState classes. */
@@ -31,6 +31,7 @@ package net.systemeD.potlatch2 {
         private var maximiseFunction:String;
         private var minimiseFunction:String;
         private var moveFunction:String;
+        private var _isActive:Boolean=false;
 
 		[Embed(source="../../../embedded/pen.png")] 		public var pen:Class;
 		[Embed(source="../../../embedded/pen_x.png")] 		public var pen_x:Class;
@@ -49,6 +50,13 @@ package net.systemeD.potlatch2 {
             this.minimiseFunction = Connection.getParam("minimise_function", null);
             this.moveFunction = Connection.getParam("move_function", null);
 
+        }
+
+        public function setActive():void {
+            if (_isActive) return;
+            map.setController(this);
+            _connection = map.connection;
+            
             map.parent.addEventListener(MouseEvent.MOUSE_MOVE, mapMouseEvent);
             map.parent.addEventListener(MouseEvent.MOUSE_UP, mapMouseEvent);
             map.parent.addEventListener(MouseEvent.MOUSE_DOWN, mapMouseEvent);
@@ -60,11 +68,8 @@ package net.systemeD.potlatch2 {
             if (this.moveFunction) {
                 map.addEventListener(MapEvent.MOVE, moveHandler);
             }
-        }
-
-        public function setActive():void {
-            map.setController(this);
-            _connection = map.connection;
+            _isActive = true;
+            
         }
 
         /** Accesses map object. */
@@ -75,6 +80,11 @@ package net.systemeD.potlatch2 {
         /** Accesss connection object. */
         public function get connection():Connection {
             return _connection;
+        }
+        
+        /** Is the controller responding to user input yet? */
+        public function get isActive():Boolean {
+        	return _isActive;
         }
 
         /**

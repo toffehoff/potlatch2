@@ -212,7 +212,6 @@
 
 			// position toolbox
 			toolbox=Toolbox(PopUpManager.createPopUp(this,Toolbox,false));
-			toolbox.init(theController);
 			toolbox.x=stage.stageWidth-toolbox.width-5;
 			toolbox.y=stage.stageHeight-toolbox.height-5;
 
@@ -226,7 +225,6 @@
 			Globals.vars.root=theMap;	// just for the addDebug function
 
             theController = new EditController(theMap, tagViewer, toolbox);
-            theController.setActive();
             
             var conn:Connection = Connection.getConnectionInstance();
             conn.addEventListener(Connection.LOAD_STARTED, onDataStart);
@@ -379,6 +377,10 @@
 				case Connection.SAVE_COMPLETED:	savecount--; break;
 			}
             updateDataWorking();
+            // Make the map interactive after the first data starts trickling in
+            if (theController && !theController.isActive)
+                theController.setActive();
+            
         }
 		private function updateDataWorking():void {
 			if (loadcount>0 && savecount>0) { dataWorking.text="Loading/saving..."; }

@@ -103,8 +103,6 @@ package net.systemeD.halcyon {
             connection.addEventListener(Connection.WAY_RENUMBERED, wayRenumbered);
             connection.addEventListener(Connection.NODE_RENUMBERED, nodeRenumbered);
 			gotEnvironment(null);
-
-			addEventListener(Event.ENTER_FRAME, everyFrame);
 			scrollRect=new Rectangle(0,0,800,600);
         }
 
@@ -159,10 +157,12 @@ package net.systemeD.halcyon {
 				scale=startscale;
 				this.dispatchEvent(new MapEvent(MapEvent.SCALE, {scale:scale}));
 			}
+            addEventListener(Event.ENTER_FRAME, everyFrame); // now start painting when requested
 
 			scalefactor=MASTERSCALE/Math.pow(2,13-scale);
 			baselon    =startlon          -(mapwidth /2)/scalefactor;
 			basey      =lat2latp(startlat)+(mapheight/2)/scalefactor;
+
 			updateCoords(0,0);
             this.dispatchEvent(new Event(MapEvent.INITIALISED));
 			download();
@@ -498,7 +498,7 @@ package net.systemeD.halcyon {
 
 		/** Prepare for being dragged by recording start time and location of mouse. */
 		public function mouseDownHandler(event:MouseEvent):void {
-			if (!_draggable) { return; }
+			if (!_draggable || !tileset) { return; }
 			dragstate=NOT_MOVED;
 			lastxmouse=stage.mouseX; downX=stage.mouseX;
 			lastymouse=stage.mouseY; downY=stage.mouseY;
@@ -507,12 +507,14 @@ package net.systemeD.halcyon {
         
 		/** Respond to mouse up by possibly moving map. */
 		public function mouseUpHandler(event:MouseEvent=null):void {
+			if (!tileset) return; // we can get called by controller states, before we're properly set up.
 			if (dragstate==DRAGGING) { moveMap(x,y); }
 			dragstate=NOT_DRAGGING;
 		}
         
 		/** Respond to mouse movement, dragging the map if tolerance threshold met. */
 		public function mouseMoveHandler(event:MouseEvent):void {
+			if (!tileset) return; // we can get called by controller states, before we're properly set up.
 			if (!_draggable) { return; }
 			if (dragstate==NOT_DRAGGING) { 
 			   this.dispatchEvent(new MapEvent(MapEvent.MOUSE_MOVE, { x: coord2lon(mouseX), y: coord2lat(mouseY) }));
@@ -545,6 +547,7 @@ package net.systemeD.halcyon {
 		
 		/** Respond to cursor movements and zoom in/out.*/
 		public function keyUpHandler(event:KeyboardEvent):void {
+			if (!tileset) return;
 			if (event.target is TextField) return;				// not meant for us
 			switch (event.keyCode) {
 				case Keyboard.PAGE_UP:	zoomIn(); break;                 // Page Up - zoom in
