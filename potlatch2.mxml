@@ -414,6 +414,11 @@
 		}
 
         private function dragEnterHandler(event:DragEvent):void {
+            if (!theController || !theController.isActive)
+                // if map is not ready for business, don't accept drag-drop, by precaution.
+                // TODO should probably check for map readiness, not controller readiness
+                return;
+                
             // Get the drop target component from the event object.
             var dropTarget:Canvas=event.currentTarget as Canvas;
             // Accept the drag only if the user is dragging poi with tags
