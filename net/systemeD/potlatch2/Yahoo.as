@@ -21,14 +21,16 @@ package net.systemeD.potlatch2 {
 		private var inited:Boolean;
 		private var enabled:Boolean;
 
-		public function Yahoo(w:Number, h:Number, map:Map) {
+		public function Yahoo(w:Number, h:Number, map:Map, initparams:Object) {
 			super();
 			this.init(token, w, h);  
 			this.mapType="satellite";
-			this.alpha=0.5;
 			this.map=map;
 			inited=false;
 			visible=enabled=false;
+            if (initparams['background_dim'] == null || initparams['background_dim']) alpha = 0.5;
+            else alpha=1; // map.getDimming() not initialised yet. 
+
 			this.addEventListener(YahooMapEvent.MAP_INITIALIZE, initHandler);
 		}
 		

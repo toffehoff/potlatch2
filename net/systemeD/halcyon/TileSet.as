@@ -7,6 +7,10 @@ package net.systemeD.halcyon {
 	import flash.system.LoaderContext;
 	import flash.utils.Timer;
 
+    /** This class manages the fetching of tiles for background imagery from compatible servers. When the map is scrolled,
+    * it works out which tiles are needed, and requests them. When they arrive, they are faded into display.
+    * Important note: this class is *not* used for Yahoo! imagery. That is handled through the Yahoo and YahooMap classes.
+    */
     public class TileSet extends Sprite {
 
 		public var tile_l:int;
@@ -157,9 +161,9 @@ package net.systemeD.halcyon {
 
 /* We may need something like this in the future, not sure. Trouble is if a tile doesn't get loaded on first go,
    it will never get loaded. 
-        private function checkTileLoaded(z,x,y) {
+        private function checkTileLoaded(z:int,x:int,y:int) {
             if (tiles[z+','+x+','+y]==true){
-            	trace("Didn't even start getting tile: " + z+','+x+','+y);
+                trace("Didn't even start getting tile: " + z+','+x+','+y);            	
             	requests.push([z,x,y]);
             	return; 
             }	
