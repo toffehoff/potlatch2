@@ -10,12 +10,14 @@ package net.systemeD.potlatch2.collections {
 	import net.systemeD.potlatch2.FunctionKeyManager;
 	import net.systemeD.potlatch2.Yahoo;
 	import mx.collections.ArrayCollection;
-
-	/*
-		There's lots of further tidying we can do:
-		- remove all the horrid Yahoo stuff
-		- remove the backreferences to _map and send events instead
-		but this will do for now and help remove the clutter from potlatch2.mxml.
+	
+	/** Manages the different choices of background imagery, dealing with details like retrieving lists of imagery,
+	 * saving and retrieving the current choice, etc.
+	 *	
+	 *  TODO There's lots of further tidying we can do:
+	 *	- remove all the horrid Yahoo stuff
+	 *	- remove the backreferences to _map and send events instead
+	 *	but this will do for now and help remove the clutter from potlatch2.mxml.
 	*/
 
 	public class Imagery extends EventDispatcher {
@@ -172,7 +174,7 @@ package net.systemeD.potlatch2.collections {
 			obj.flush();
 		}
 		
-		private function findBackgroundWithName(name:String):Object {
+		public function findBackgroundWithName(name:String):Object {
 			for each (var bg:Object in collection) {
 				if (bg.name==name) { return bg; }
 			}

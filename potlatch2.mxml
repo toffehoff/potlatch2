@@ -27,7 +27,8 @@
 
     <mx:ApplicationControlBar dock="true">
         <mx:PopUpButton id="bgButton" label="Background" openAlways="true" styleName="appBarButton"
-            creationComplete="bgButton.popUp = new BackgroundSelector();"/>
+            creationComplete="bgButton.popUp = new BackgroundSelector();"
+            open="(bgButton.popUp as BackgroundSelector).updateSelectedIndex();"/>
         <mx:PopUpButton id="styleButton" label="Map Style" openAlways="true" styleName="appBarButton"
             creationComplete="styleButton.popUp = new StyleSelector();"/>
 		<mx:PopUpMenuButton id="gpsButton" styleName="appBarButton"
