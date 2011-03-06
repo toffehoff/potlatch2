@@ -441,7 +441,7 @@ package net.systemeD.halcyon {
 		/** Select a new background imagery. */
 		public function setBackground(bg:Object):void {
 			tileparams=bg;
-			if (tileset) { tileset.init(bg, bg.url!=''); }
+			if (tileset) { tileset.init(bg, bg.url!='', tileset.getDimming()); }
 		}
 
 		/** Set background dimming on/off. */
