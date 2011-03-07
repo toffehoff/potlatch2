@@ -31,10 +31,10 @@
 		import mx.managers.PopUpManager;
 
 		/** Sets the currently selected item by consulting Imagery.instance() */
-		public function updateSelectedIndex() {
+		public function updateSelectedIndex():void {
 			if(background.selectedIndex==-1) {
 			    var im:Imagery = Imagery.instance(); 
-			    var i = im.collection.indexOf(im.findBackgroundWithName(im.selected.name));
+			    var i:int = im.collection.indexOf(im.findBackgroundWithName(im.selected.name));
 			    background.selectedIndex = i;
 			}
 		}
