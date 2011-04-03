@@ -148,6 +148,18 @@
         <input type="freetext" presence="onTagMatch" category="Naming" name="Reference" key="ref" description="The number of the platform" priority="low"/>
         <inputSet ref="common"/>
       </feature>
+
+      <feature name="Railway crossing">
+        <category>transport</category>
+        <icon image="features/pois/barrier_lift_gate.n.24.png"/>
+        <point/>
+        <tag k="railway" v="level_crossing" vmatch="level_crossing|crossing"/>
+	    <input type="choice" key="railway" name="Type of crossing" presence="always" priority="highest">
+	      <choice value="level_crossing" text="Road crossing"/>
+	      <choice value="crossing" text="Pedestrian crossing"/>
+	    </input>
+        <inputSet ref="common"/>
+      </feature>
     
   <feature name="Car Wash">
     <category>transport</category>
