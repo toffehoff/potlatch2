@@ -21,7 +21,71 @@
     <inputSet ref="nameAndRef" />
     <inputSet ref="common"/>
   </feature>
+
+  <feature name="Monitoring">
+    <category>manmade</category>
+    <icon image="features/manmade_tower.png"/>
+    <help>http://wiki.openstreetmap.org/wiki/Tag:man_made%3Dmonitoring_station</help>
+    <point/>
+    <tag k="man_made" v="monitoring_station"/>
+    <input type="choice" category="Monitoring" name="GPS" key="monitoring:gps" description="Site used to monitor signals from the GPS satellite cluster?">
+      <choice value="yes" text="Yes"/>
+      <choice value="no" text="No"/>
+    </input>
+    <input type="choice" category="Monitoring" name="GLONASS" key="monitoring:glonass" description="Site used to monitor signals from the GLONASS satellite cluster?">
+      <choice value="yes" text="Yes"/>
+      <choice value="no" text="No"/>
+    </input>
+    <input type="choice" category="Monitoring" name="Noise" key="monitoring:noise" description="Site used to monitor noise levels?">
+      <choice value="yes" text="Yes"/>
+      <choice value="no" text="No"/>
+    </input>
+    <input type="choice" category="Monitoring" name="Air quality" key="monitoring:air_quality" description="Site used to monitor air quality due to man made pollution or natural pollen levels?">
+      <choice value="yes" text="Yes"/>
+      <choice value="no" text="No"/>
+    </input>
+    <input type="choice" category="Monitoring" name="River level" key="monitoring:river_level" description="Site used to monitor the water level in rivers?">
+      <choice value="yes" text="Yes"/>
+      <choice value="no" text="No"/>
+    </input>
+    <input type="choice" category="Monitoring" name="Sea/Tide level" key="monitoring:tide_gauge" description="Site used to monitor the sea level?">
+      <choice value="yes" text="Yes"/>
+      <choice value="no" text="No"/>
+    </input>
+    <input type="choice" category="Monitoring" name="Seismic Activity" key="monitoring:seismic_activity" description="Site used to monitor seismic activity?">
+      <choice value="yes" text="Yes"/>
+      <choice value="no" text="No"/>
+    </input>
+    <input type="choice" category="Monitoring" name="Weather" key="monitoring:weather" description="Site used to monitor the weather?">
+      <choice value="yes" text="Yes"/>
+      <choice value="no" text="No"/>
+    </input>   
+    <input type="freetext" presence="always" category="Misc" name="Operator" key="operator" description="The organisation the monitoring station belongs to" priority="low"/>
+    <inputSet ref="nameAndRef" />
+    <inputSet ref="common"/>
+  </feature>
   
+  <feature name="Speed camera">
+    <category>transport</category>
+    <category>manmade</category>
+    <icon image="features/pois/tourist_view_point.n.24.png"/>
+    <help>http://wiki.openstreetmap.org/wiki/Tag:highway%3Dspeed_camera</help>
+    <point/>
+    <tag k="highway" v="speed_camera"/>
+    <inputSet ref="common"/>
+    <inputSet ref="nameAndRef" />
+  </feature>
+
+  <feature name="Surveillance">
+    <category>manmade</category>
+    <icon image="features/pois/tourist_view_point.n.24.png"/>
+    <help>http://wiki.openstreetmap.org/wiki/Tag:man_made%3Dsurveillance</help>
+    <point/>
+    <tag k="man_made" v="surveillance"/>
+    <inputSet ref="common"/>
+    <inputSet ref="nameAndRef" />
+  </feature>
+
   <feature name="Navigation mark">
     <category>manmade</category>
     <icon image="features/manmade_lighthouse.png"/>
